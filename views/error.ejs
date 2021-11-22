@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate')  %>
+
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert alert-danger">
+            <%= err.message  %>
+        </h4>
+        <%if(process.env.NODE_ENV !==err.message){%>
+            <p class="overflow-hidden">
+                <%=err.stack%>
+            </p>
+            <%}%>
+    </div>

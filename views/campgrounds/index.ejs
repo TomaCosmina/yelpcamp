@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate')%>
+
+    <div id="cluster-map"></div>
+
+    <h1 class="my-3">Campgrounds</h1>
+    <% for(let campground of campgrounds){ %>
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <%if(campground.images.length) {%>
+                        <img class="img-fluid" width="450" height="auto" alt="" src="<%=campground.images[0].url%> ">
+                        <%}else{%>
+                            <img class="img-fluid" width="250" height="auto" alt="" src="https://media.istockphoto.com/photos/misty-mountain-landscape-picture-id1257605805?b=1&k=20&m=1257605805&s=170667a&w=0&h=dMJWnMoBnPq5GdyY6vI73hbOAZM_cgGMD6U5CndU7TE=">;
+                            <%}%>
+
+
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=campground.title  %>
+                        </h5>
+
+                        <p class="card-text">
+                            <%=campground.description%>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted"><%=campground.location%></small>
+                        </p>
+                        <a href="/campgrounds/<%=campground._id%>" class="btn btn-primary">View <%=campground.title  %> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+            <script>
+                // const mapToken = 'pk.eyJ1IjoiLXRvbWEtIiwiYSI6ImNrdXpnMHp1bTA0NDMydXBhYTZ1cnZmMDkifQ.X7CS6ItunOWNf_-nfu-S9w';
+                //console.log(mapToken)
+                const campgrounds = {
+                    features: <%-JSON.stringify(campgrounds)%>
+                }
+            </script>
+
+            <script src="/javascripts/clusterMap.js"></script>

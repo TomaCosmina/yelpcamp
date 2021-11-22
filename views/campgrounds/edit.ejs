@@ -1,0 +1,104 @@
+<% layout('layouts/boilerplate')%>
+    <style>
+        input[type="checkbox"] {
+            display: none;
+        }
+        
+        .one {
+            border: 1px solid #fff;
+            padding: 10px;
+            display: block;
+            position: relative;
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .one:before {
+            background-color: white;
+            color: white;
+            content: " ";
+            display: block;
+            border-radius: 50%;
+            border: 1px solid grey;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 28px;
+            transition-duration: 0.4s;
+            transform: scale(0);
+        }
+        
+        .one img {
+            transition-duration: 0.2s;
+            transform-origin: 50% 50%;
+        }
+        
+         :checked+.one {
+            border-color: #ddd;
+        }
+        
+         :checked+.one:before {
+            content: "✓";
+            background-color: grey;
+            transform: scale(1);
+        }
+        
+         :checked+.one img {
+            transform: scale(0.9);
+            box-shadow: 0 0 5px #333;
+            z-index: -1;
+        }
+        
+        .two {
+            display: inline-block;
+        }
+    </style>
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%=campground._id%>?_method=PUT " method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" name="campground[title]" id="title" value="<%=campground.title%>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]" value="<%=campground.location%>" required>
+                </div>
+
+                <div class=" mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.0" aria-label="Price" aria-describedby="price-label" name="campground[price]" value="<%=campground.price%>" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]" required><%=campground.description%></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Add Images</label>
+                    <input class="form-control" type="file" name="image" id="formFileMultiple" multiple>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h6>Do you want delete some images?</h6>
+                    <%campground.images.forEach(function(img,i){%>
+                        <div class="two">
+                            <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                            <label for="image-<%=i%>" class="one"> <img src="<%=img.url%>"  width="150" height="auto" alt=""></label>
+                        </div>
+                        <%})%>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Campground</button>
+                </div>
+            </form>
+        </div>
+    </div>
